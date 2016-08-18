@@ -2,7 +2,7 @@ import Data from './app-state'
 import initialState from './initial-state'
 import {draw} from './draw'
 import runSteps from './steps/steps'
-
+import runInits from './inits/inits'
 
 //Cache references to canvas and context
 var canvas = document.getElementById("js-canvas");
@@ -14,8 +14,15 @@ Data.init(initialState, canvas, ctx);
 const state = Data.getState();
 
 
+/* Inits */
+runInits();
 
-//Draw Loop
+
+
+
+
+
+/* Draw Loop */
 var step = function() {
 
     const state = Data.getState();

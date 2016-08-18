@@ -32,6 +32,21 @@ export default {
         this.state = {
             ...newState
         }
+    },
+
+    removeNodeInCollection(collectionName="", nodeId="") {
+        var newState = { ...this.state };
+        var collection = {...this.state[collectionName]}
+
+        delete collection[nodeId];
+
+        newState[collectionName] = {...collection}
+
+        this.state = {
+            ...newState
+        }
     }
+
+
 
 };

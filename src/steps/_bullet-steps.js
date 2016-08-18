@@ -1,4 +1,4 @@
-import {mergeBullet} from '../action-creators'
+import {mergeBullet, removeBullet} from '../action-creators'
 
 export function bulletSteps(state) {
 
@@ -8,11 +8,20 @@ export function bulletSteps(state) {
 
         const model = bullets[id];
         const currentX = model.x;
-        const newX = (currentX > 0) ? currentX - model.speed : currentX;
 
-        mergeBullet(id, {
-            x: newX
-        })
+
+        //Update going left
+        if (currentX > -30) {
+            mergeBullet(id, {
+                x: currentX - model.speed
+            })
+        } else {
+
+            /* Remove my node */
+            removeBullet(id)
+
+        }
+
 
 
     }
