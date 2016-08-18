@@ -15,7 +15,7 @@ const state = Data.getState();
 
 
 /* Inits */
-runInits();
+runInits(state);
 
 
 
