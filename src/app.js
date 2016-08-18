@@ -12,14 +12,7 @@ var ctx = canvas.getContext("2d");
 Data.init(initialState, canvas, ctx);
 
 const state = Data.getState();
-console.log('1', state.bullets);
 
-
-Data.mergeNodeInCollection("bullets", "a", {
-   color: "red"
-});
-
-console.log(Data.getState().bullets);
 
 
 //Draw Loop
@@ -34,14 +27,13 @@ var step = function() {
     runSteps(state);
 
 
-
-    //BULLET
-    const currentX = Data.getState().bulletX;
-    const newX = (currentX < 0) ? 400 : currentX - 4;
-
-    Data.mergeState({
-        bulletX: newX
-    });
+    // //BULLET
+    // const currentX = Data.getState().bulletX;
+    // const newX = (currentX < 0) ? 400 : currentX - 4;
+    //
+    // Data.mergeState({
+    //     bulletX: newX
+    // });
 
 
 

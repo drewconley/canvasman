@@ -1,11 +1,8 @@
-import {draw} from './draw'
-
 export default {
     state: {},
 
     init(initialState) {
         this.state = {...initialState}
-        //draw(canvas, ctx, this.state)
     },
 
     getState() {

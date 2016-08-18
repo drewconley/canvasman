@@ -2,8 +2,8 @@
 //Motion, etc.
 import {bulletSteps} from './_bullet-steps'
 
-export default function() {
-    bulletSteps();
+export default function(state) {
+    bulletSteps(state);
 }
 
 /* Character steps update was this: */
