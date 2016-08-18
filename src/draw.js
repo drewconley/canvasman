@@ -1,6 +1,9 @@
-export function draw(canvas, ctx, state) {
+import {drawCharacter} from './draw/draw-character'
+
+
+export function draw(canvas, ctx, state, assets) {
     drawSky(ctx, state);
-    drawCharacter(ctx, state);
+    drawCharacter(ctx, state, assets);
     drawBullets(ctx, state);
 }
 
@@ -11,18 +14,7 @@ function drawSky(ctx, state) {
     ctx.fillRect(0,0, state.canvasWidth, state.canvasHeight);
 }
 
-function drawCharacter(ctx, state) {
-    ctx.beginPath();
-    ctx.fillStyle = "#fff";
 
-    const characterWidth = 30;
-    const characterHeight = 30;
-
-    ctx.fillRect(
-        state.characterX, state.characterY,
-        characterWidth, characterHeight
-    );
-}
 
 function drawBullets(ctx, state) {
 
@@ -41,3 +33,12 @@ function drawBullets(ctx, state) {
         ctx.fillRect(model.x, model.y, 10, 10);
     }
 }
+
+/*
+ ctx.drawImage(image,
+ 10, 10,   // Start at 10 pixels from the left and the top of the image (crop),
+ 80, 30,   // "Get" a `80 * 30` (w * h) area from the source image (crop),
+ 0, 0,     // Place the result at 0, 0 in the canvas,
+ 160, 60); // With as width / height: 160 * 60 (scale)
+ //Thank you, person from Stack Overflow
+ */

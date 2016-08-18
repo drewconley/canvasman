@@ -14,25 +14,34 @@ Data.init(initialState, canvas, ctx);
 const state = Data.getState();
 
 
-/* Inits */
-runInits(state);
 
 
 
+
+
+let assets = {
+    mm: new Image()
+};
+
+assets.mm.src = `/images/mm-blue-sprites.png?v=${Date.now()}`;
 
 
 
 /* Draw Loop */
+var frameCount=1;
 var step = function() {
 
     const state = Data.getState();
 
     //Draw the scene
-    draw(canvas, ctx, state)
+    draw(canvas, ctx, state, assets);
 
     //Run Steps
-    runSteps(state);
+    runSteps(state, frameCount);
 
+    //Track frame count for character animations
+    frameCount += 1;
+    if (frameCount > 64) { frameCount = 1}
 
     // //BULLET
     // const currentX = Data.getState().bulletX;
@@ -47,4 +56,8 @@ var step = function() {
     requestAnimationFrame(step)
 };
 
-requestAnimationFrame(step);
+assets.mm.onload = function() {
+    /* Inits */
+    runInits(state);
+    requestAnimationFrame(step);
+}

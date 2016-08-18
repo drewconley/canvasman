@@ -5,5 +5,5 @@ export default function inits(state) {
     /* Run all of the "kickoff" processses, like keyboard bindings and intervals */
     bindKeyboardListeners();
 
-    createBulletIntervals(state);
+    //createBulletIntervals(state);
 }
