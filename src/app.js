@@ -1,6 +1,12 @@
 import Data from './app-state'
-import {draw} from './draw'
 
+
+
+//Cache references to canvas and context
+var canvas = document.getElementById("js-canvas");
+var ctx = canvas.getContext("2d");
+
+//Set up App State
 const initialState = {
     canvasWidth: 400,
     canvasHeight: 300,
@@ -9,19 +15,21 @@ const initialState = {
     characterY: 70
 };
 
-Data.init(initialState);
+//Init the app. (Does the first draw)
+Data.init(initialState, canvas, ctx);
 
-Data.mergeState({
-    someNewValue: "yay!"
-});
+//Loop for testing
+var step = function() {
+    const currentY = Data.getState().characterY;
+    const newY = (currentY < 300) ? currentY + 2 : -30;
 
+    Data.mergeState({
+        characterY: newY
+    }, canvas, ctx);
 
-//Cache references to canvas and context
-var canvas = document.getElementById("js-canvas");
-var ctx = canvas.getContext("2d");
+    requestAnimationFrame(step)
 
+};
 
-var state = Data.getState();
-console.log(state);
+//requestAnimationFrame(step)
 
-draw( canvas, ctx, state )

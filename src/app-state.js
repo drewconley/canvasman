@@ -1,20 +1,24 @@
+import {draw} from './draw'
+
 export default {
     state: {},
-    init(initialState) {
+    
+    init(initialState, canvas, ctx) {
         this.state = {...initialState}
+        draw(canvas, ctx, this.state)
     },
 
     getState() {
         return {...this.state}
     },
 
-    mergeState(newValues={}) {
+    mergeState(newValues={}, canvas, ctx) {
         this.state = {
             ...this.state,
             ...newValues
         };
 
-        //Draw ?
+        draw(canvas, ctx, this.state)
     }
 
 };
