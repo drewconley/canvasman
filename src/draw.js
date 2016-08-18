@@ -37,7 +37,7 @@ function drawBullets(ctx, state) {
 
         //Draw the bullet
         ctx.beginPath();
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = "red";
         ctx.fillRect(model.x, model.y, 10, 10);
     }
 }

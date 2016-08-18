@@ -5,6 +5,10 @@ export default {
     characterX: 80,
     characterY: 70,
 
+    //Keyboard
+    isKeyboardUpPressed: false,
+    isKeyboardDownPressed: false,
+
     bullets: {
         a: {
             x: 380,

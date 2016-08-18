@@ -1,9 +1,12 @@
 //Repository of all Step events that need to happen.
 //Motion, etc.
 import {bulletSteps} from './_bullet-steps'
+import {playerMovement} from './_player-movement'
 
 export default function(state) {
+
     bulletSteps(state);
+    playerMovement(state);
 }
 
 /* Character steps update was this: */

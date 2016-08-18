@@ -16,10 +16,17 @@ export function bulletSteps(state) {
                 x: currentX - model.speed
             })
         } else {
-
             /* Remove my node */
-            removeBullet(id)
+            removeBullet(id);
+        }
 
+
+        /* Check for collisions */
+        if (
+            model.x+10 > state.characterX && model.x <= state.characterX+30 &&
+            model.y+10 > state.characterY && model.y <= state.characterY+30
+        ) {
+            removeBullet(id);
         }
 
 
