@@ -1,6 +1,7 @@
 export function draw(canvas, ctx, state) {
     drawSky(ctx, state);
     drawCharacter(ctx, state);
+    drawBullets(ctx, state);
 }
 
 
@@ -21,4 +22,22 @@ function drawCharacter(ctx, state) {
         state.characterX, state.characterY,
         characterWidth, characterHeight
     );
+}
+
+function drawBullets(ctx, state) {
+
+
+        // ctx.beginPath();
+        // ctx.fillStyle = "yellow";
+        // ctx.fillRect(state.bulletX, state.bulletY, 10, 10);
+
+    const bullets = state.bullets;
+    for (var id in bullets) {
+        const model = bullets[id];
+
+        //Draw the bullet
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(model.x, model.y, 10, 10);
+    }
 }

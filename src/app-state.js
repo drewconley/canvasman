@@ -2,23 +2,39 @@ import {draw} from './draw'
 
 export default {
     state: {},
-    
-    init(initialState, canvas, ctx) {
+
+    init(initialState) {
         this.state = {...initialState}
-        draw(canvas, ctx, this.state)
+        //draw(canvas, ctx, this.state)
     },
 
     getState() {
-        return {...this.state}
+        const copy = {...this.state};
+        return {
+            ...copy
+        }
     },
 
-    mergeState(newValues={}, canvas, ctx) {
+    mergeState(newValues={}) {
         this.state = {
             ...this.state,
             ...newValues
         };
+    },
 
-        draw(canvas, ctx, this.state)
+    mergeNodeInCollection(collectionName="", nodeId="", newValues={}) {
+        var newState = { ...this.state };
+        var collection = {...this.state[collectionName]}
+        var newNode = {
+            ...collection[nodeId],
+            ...newValues
+        };
+        collection[nodeId] = {...newNode}
+        newState[collectionName] = {...collection}
+
+        this.state = {
+            ...newState
+        }
     }
 
 };
