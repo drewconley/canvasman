@@ -3,10 +3,13 @@ export default {
     canvasHeight: 300,
 
     characterX: 80,
-    characterY: 170,
+    characterY: 300-32,
     characterFrame: 0,
     characterPose: [ [0,0] ],
     isFacingLeft: true, //default is Right
+
+    //Jumping
+    verticalBoost: 0,
 
     //Keyboard
     isKeyboardLeftPressed: false,

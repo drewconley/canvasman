@@ -3,6 +3,7 @@ import {mergeState} from '../action-creators'
 
 export function bindKeyboardListeners() {
 
+    var jumpSafe = true;
     document.addEventListener('keydown', function (e) {
         if (e.which == 37) {
             mergeState({
@@ -14,6 +15,17 @@ export function bindKeyboardListeners() {
                 isKeyboardRightPressed: true
             });
         }
+
+        //Jump!
+        if (e.which == 38) {
+            if (jumpSafe) {
+                jumpSafe = false;
+                mergeState({
+                    verticalBoost: -170
+                });
+            }
+        }
+
     }, false);
 
     document.addEventListener('keyup', function (e) {
@@ -27,6 +39,15 @@ export function bindKeyboardListeners() {
                 isKeyboardRightPressed: false
             });
         }
+
+        //Release Jump!
+        if (e.which == 38) {
+            jumpSafe = true;
+            mergeState({
+                verticalBoost: 0
+            });
+        }
     }, false);
+
 
 }
