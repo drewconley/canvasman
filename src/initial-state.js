@@ -3,13 +3,14 @@ export default {
     canvasHeight: 300,
 
     characterX: 80,
-    characterY: 70,
+    characterY: 170,
     characterFrame: 0,
     characterPose: [ [0,0] ],
+    isFacingLeft: true, //default is Right
 
     //Keyboard
-    isKeyboardUpPressed: false,
-    isKeyboardDownPressed: false,
+    isKeyboardLeftPressed: false,
+    isKeyboardRightPressed: false,
 
     bullets: {
         // a: {

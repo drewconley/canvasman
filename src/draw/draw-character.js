@@ -4,16 +4,17 @@ export function drawCharacter(ctx, state, assets) {
     const characterHeight = 32;
 
     ctx.beginPath();
-    ctx.fillStyle = "#fff";
-
-    ctx.fillRect(
-        state.characterX, state.characterY,
-        characterWidth, characterHeight
-    );
+    // ctx.fillStyle = "#fff";
+    //
+    // ctx.fillRect(
+    //     state.characterX, state.characterY,
+    //     characterWidth, characterHeight
+    // );
 
     //const currentPose = MegaManPoses.StepOff;
     const currentPose = state.characterPose;
     const activeFrame = currentPose[state.characterFrame] || currentPose[0];
+
 
 
     ctx.drawImage(
@@ -23,5 +24,8 @@ export function drawCharacter(ctx, state, assets) {
         state.characterX, state.characterY,
         characterWidth,characterWidth
     );
+
+
+
 
 }

@@ -3,19 +3,21 @@ import MegaManPoses from '../sprite-measurements/megaman-measurement'
 
 export function playerMovement(state, frameCount) {
 
-    if (state.isKeyboardUpPressed) {
+    if (state.isKeyboardLeftPressed) {
 
-        const newY = state.characterY - 6;
+        const newX = state.characterX - 3;
         mergeState({
-            characterY: newY > 0 ? newY : 0,
+            characterX: newX > 0 ? newX : 0,
+            isFacingLeft: true,
         })
     }
 
-    if (state.isKeyboardDownPressed) {
+    if (state.isKeyboardRightPressed) {
 
-        const newY = state.characterY + 6;
+        const newX = state.characterX + 3;
         mergeState({
-            characterY: newY < (300 - 30) ? newY : 300-30
+            characterX: newX < (400 - 32) ? newX : 400-32,
+            isFacingLeft: false
         })
     }
 
@@ -37,9 +39,11 @@ export function playerMovement(state, frameCount) {
 }
 
 function getCharacterPose(state) {
-    if (state.isKeyboardDownPressed || state.isKeyboardUpPressed) {
-        return MegaManPoses.Jump
+    const isLeft = state.isFacingLeft;
+
+    if (state.isKeyboardLeftPressed || state.isKeyboardRightPressed) {
+        return isLeft ? MegaManPoses.Left_Run : MegaManPoses.Run;
     }
 
-    return MegaManPoses.Stand
+    return isLeft ? MegaManPoses.Left_Stand : MegaManPoses.Stand;
 }

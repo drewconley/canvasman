@@ -4,27 +4,27 @@ import {mergeState} from '../action-creators'
 export function bindKeyboardListeners() {
 
     document.addEventListener('keydown', function (e) {
-        if (e.which == 38) {
+        if (e.which == 37) {
             mergeState({
-                isKeyboardUpPressed: true
+                isKeyboardLeftPressed: true
             });
         }
-        if (e.which == 40) {
+        if (e.which == 39) {
             mergeState({
-                isKeyboardDownPressed: true
+                isKeyboardRightPressed: true
             });
         }
     }, false);
 
     document.addEventListener('keyup', function (e) {
-        if (e.which == 38) {
+        if (e.which == 37) {
             mergeState({
-                isKeyboardUpPressed: false
+                isKeyboardLeftPressed: false
             });
         }
-        if (e.which == 40) {
+        if (e.which == 39) {
             mergeState({
-                isKeyboardDownPressed: false
+                isKeyboardRightPressed: false
             });
         }
     }, false);
