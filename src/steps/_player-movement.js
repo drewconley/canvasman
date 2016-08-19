@@ -1,11 +1,14 @@
 import {mergeState} from '../action-creators'
 import MegaManPoses from '../sprite-measurements/megaman-measurement'
 
-export function playerMovement(state, frameCount) {
+export function playerMovement(state, frameCount, dt) {
+
+    //console.log(dt)
+
 
     if (state.isKeyboardLeftPressed) {
 
-        const newX = state.characterX - 3;
+        const newX = Math.round( state.characterX - (90 * dt) );
         mergeState({
             characterX: newX > 0 ? newX : 0,
             isFacingLeft: true,
@@ -14,7 +17,7 @@ export function playerMovement(state, frameCount) {
 
     if (state.isKeyboardRightPressed) {
 
-        const newX = state.characterX + 3;
+        const newX = Math.round( state.characterX + (90 * dt) );
         mergeState({
             characterX: newX < (400 - 32) ? newX : 400-32,
             isFacingLeft: false

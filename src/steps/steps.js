@@ -3,10 +3,10 @@
 import {bulletSteps} from './_bullet-steps'
 import {playerMovement} from './_player-movement'
 
-export default function(state, frameCount) {
+export default function(state, frameCount, dt) {
 
-    bulletSteps(state);
-    playerMovement(state, frameCount);
+    //bulletSteps(state);
+    playerMovement(state, frameCount, dt);
 }
 
 /* Character steps update was this: */

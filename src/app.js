@@ -29,7 +29,12 @@ assets.mm.src = `/images/mm-blue-sprites.png?v=${Date.now()}`;
 
 /* Draw Loop */
 var frameCount=1;
+var lastTime;
 var step = function() {
+
+    var now = Date.now();
+    var dt = (now - lastTime) / 1000.0;
+
 
     const state = Data.getState();
 
@@ -37,22 +42,13 @@ var step = function() {
     draw(canvas, ctx, state, assets);
 
     //Run Steps
-    runSteps(state, frameCount);
+    runSteps(state, frameCount, dt);
 
     //Track frame count for character animations
     frameCount += 1;
     if (frameCount > 64) { frameCount = 1}
 
-    // //BULLET
-    // const currentX = Data.getState().bulletX;
-    // const newX = (currentX < 0) ? 400 : currentX - 4;
-    //
-    // Data.mergeState({
-    //     bulletX: newX
-    // });
-
-
-
+    lastTime = now;
     requestAnimationFrame(step)
 };
 
