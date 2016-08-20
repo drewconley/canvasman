@@ -1,6 +1,6 @@
 import {mergeState} from '../action-creators'
 import MegaManPoses from '../sprite-measurements/megaman-measurement'
-import {getSolidSurface} from '../helpers/collision-helpers'
+import {getSolidSurface, getSolidSurfaceToRight, getSolidSurfaceToLeft} from '../helpers/collision-helpers'
 
 export function playerMovement(state, prevState, frameCount, dt) {
 
@@ -10,14 +10,28 @@ export function playerMovement(state, prevState, frameCount, dt) {
     let characterX = state.characterX;
     let isFacingLeft = state.isFacingLeft;
 
+    const leftWall = getLeftWall(state);
+
+
 
     if (state.isKeyboardLeftPressed) {
-        characterX = Math.round( characterX - (110 * dt) );
+
+
+
+        if (!leftWall) {
+            characterX = Math.round(characterX - (110 * dt));
+        } else {
+            //characterX = leftWall.x + leftWall.width;
+        }
         isFacingLeft = true;
     }
 
     if (state.isKeyboardRightPressed) {
-        characterX = Math.round( characterX + (110 * dt) );
+
+        if (!getRightWall(state)) {
+            characterX = Math.round(characterX + (110 * dt));
+        }
+
         isFacingLeft = false;
     }
     ///////////////////////////////////
@@ -82,6 +96,7 @@ export function playerMovement(state, prevState, frameCount, dt) {
 
 
 
+    //console.log( getRightWall(state) )
 
 
 
@@ -130,4 +145,25 @@ function getStandingSurface(state) {
         height: 32
     };
     return getSolidSurface(characterModel, state.walls); //returns a model or `null`
+}
+
+function getRightWall(state) {
+
+    const characterModel = {
+        x: state.characterX,
+        y: state.characterY,
+        width: 32,
+        height: 32
+    };
+    return getSolidSurfaceToRight(characterModel, state.walls); //returns a model or `null`
+}
+function getLeftWall(state) {
+
+    const characterModel = {
+        x: state.characterX,
+        y: state.characterY,
+        width: 32,
+        height: 32
+    };
+    return getSolidSurfaceToLeft(characterModel, state.walls); //returns a model or `null`
 }

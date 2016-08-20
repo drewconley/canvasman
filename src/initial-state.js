@@ -24,17 +24,33 @@ export default {
         {
             _id: "wall1",
             x: 5,
-            y: 200,
-            height: 40,
-            width: 130
+            y: 260,
+            height: 32,
+            width: 330
         },
 
         {
             _id: "wall2",
-            x: 200,
-            y: 150,
-            height: 80,
+            x: 280,
+            y: 215,
+            height: 40,
             width: 150
+        },
+
+        {
+            _id: "wall3",
+            x: 170,
+            y: 200,
+            height: 50,
+            width: 32
+        },
+
+        {
+            _id: "wall4",
+            x: 0,
+            y: 210,
+            height: 50,
+            width: 32
         }
     ],
 
