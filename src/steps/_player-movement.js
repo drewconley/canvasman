@@ -1,5 +1,6 @@
 import {mergeState} from '../action-creators'
 import MegaManPoses from '../sprite-measurements/megaman-measurement'
+import {getSolidSurface} from '../helpers/collision-helpers'
 
 export function playerMovement(state, frameCount, dt) {
 
@@ -8,7 +9,7 @@ export function playerMovement(state, frameCount, dt) {
 
     if (state.isKeyboardLeftPressed) {
 
-        const newX = Math.round( state.characterX - (90 * dt) );
+        const newX = Math.round( state.characterX - (110 * dt) );
         mergeState({
             characterX: newX > 0 ? newX : 0,
             isFacingLeft: true,
@@ -17,7 +18,7 @@ export function playerMovement(state, frameCount, dt) {
 
     if (state.isKeyboardRightPressed) {
 
-        const newX = Math.round( state.characterX + (90 * dt) );
+        const newX = Math.round( state.characterX + (110 * dt) );
         mergeState({
             characterX: newX < (400 - 32) ? newX : 400-32,
             isFacingLeft: false
@@ -42,14 +43,27 @@ export function playerMovement(state, frameCount, dt) {
         })
     }
 
-    //Fall
-    if (isCharacterFalling(state)) {
 
+    const surface = getStandingSurface(state);
+
+    if (surface) {
+        //Stand
+        //if (characterY > surface.y || characterY < surface.y) {
+        //    characterY = surface.y - 32; //should be refactored to player.height rather than 32
+        //}
+
+    } else {
+
+        //Fall
         characterY += 4;
-        mergeState({
-            characterY: characterY
-        })
+        if (characterY > 300 + 50) {
+            characterY = -50
+        }
     }
+
+    mergeState({
+        characterY: characterY
+    });
 
 
 
@@ -66,7 +80,10 @@ export function playerMovement(state, frameCount, dt) {
 function getCharacterPose(state) {
     const isLeft = state.isFacingLeft;
 
-    if (isCharacterFalling(state)) {
+    const isStanding = Boolean( getStandingSurface(state) );
+
+
+    if (!isStanding) {
         return isLeft ? MegaManPoses.Left_Jump : MegaManPoses.Jump;
     }
 
@@ -77,6 +94,17 @@ function getCharacterPose(state) {
     return isLeft ? MegaManPoses.Left_Stand : MegaManPoses.Stand;
 }
 
-function isCharacterFalling(state) {
-    return state.characterY < 300-32; //Meh, this will check for floors?
+function getStandingSurface(state) {
+    //return state.characterY < 300-32; //Meh, this will check for floors?
+
+    const characterModel = {
+        x: state.characterX,
+        y: state.characterY,
+        width: 32,
+        height: 32
+    };
+
+
+    return getSolidSurface(characterModel, state.walls); //returns a model or `null`
+
 }

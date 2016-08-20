@@ -3,7 +3,7 @@ export default {
     canvasHeight: 300,
 
     characterX: 80,
-    characterY: 300-32,
+    characterY: 10,
     characterFrame: 0,
     characterPose: [ [0,0] ],
     isFacingLeft: true, //default is Right
@@ -14,6 +14,27 @@ export default {
     //Keyboard
     isKeyboardLeftPressed: false,
     isKeyboardRightPressed: false,
+
+
+    walls: [
+        {
+            _id: "wall1",
+            x: 5,
+            y: 200,
+            height: 40,
+            width: 130
+        },
+
+        {
+            _id: "wall2",
+            x: 200,
+            y: 150,
+            height: 80,
+            width: 150
+        }
+    ],
+
+
 
     bullets: {
         // a: {

@@ -1,6 +1,6 @@
 import Data from './app-state'
 import initialState from './initial-state'
-import {draw} from './draw'
+import {draw} from './draw/draw'
 import runSteps from './steps/steps'
 import runInits from './inits/inits'
 

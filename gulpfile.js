@@ -10,7 +10,7 @@ gulp.task('s', function() {
     		baseDir: "www",
 		},
         open: false,
-        files: ["*/**.js"],
+        files: ["www/**/*.js"],
         ghostMode: false
     });
 });

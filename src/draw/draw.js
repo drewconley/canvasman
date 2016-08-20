@@ -1,10 +1,14 @@
-import {drawCharacter} from './draw/draw-character'
-
+import {drawCharacter} from './draw-character'
+import {drawWalls} from './draw-walls'
 
 export function draw(canvas, ctx, state, assets) {
     drawSky(ctx, state);
+    drawWalls(ctx, state);
+
+
     drawCharacter(ctx, state, assets);
     drawBullets(ctx, state);
+
 }
 
 
