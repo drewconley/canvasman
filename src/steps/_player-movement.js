@@ -2,11 +2,11 @@ import {mergeState} from '../action-creators'
 import MegaManPoses from '../sprite-measurements/megaman-measurement'
 import {getSolidSurface} from '../helpers/collision-helpers'
 
-export function playerMovement(state, frameCount, dt) {
-
-    //console.log(dt)
+export function playerMovement(state, prevState, frameCount, dt) {
 
 
+
+    //Movement
     if (state.isKeyboardLeftPressed) {
 
         const newX = Math.round( state.characterX - (110 * dt) );
@@ -46,11 +46,10 @@ export function playerMovement(state, frameCount, dt) {
 
     const surface = getStandingSurface(state);
 
+    //console.log(surface, getStandingSurface(prevState))
+
+
     if (surface) {
-        //Stand
-        //if (characterY > surface.y || characterY < surface.y) {
-        //    characterY = surface.y - 32; //should be refactored to player.height rather than 32
-        //}
 
     } else {
 
@@ -61,12 +60,25 @@ export function playerMovement(state, frameCount, dt) {
         }
     }
 
+    /* EVENT: LANDING */
+    if (surface && !getStandingSurface(prevState)) {
+        console.log('LANDING!');
+        console.log(surface.y)
+
+        characterY = surface.y - 32;
+    }
+
     mergeState({
         characterY: characterY
     });
 
 
 
+
+
+
+
+    //ANIMATION
     //Change active frame
     if (frameCount % 8 == 0) {
         const nextFrame = (state.characterFrame <= 2) ? state.characterFrame + 1 : 0;
@@ -74,6 +86,9 @@ export function playerMovement(state, frameCount, dt) {
             characterFrame: nextFrame
         })
     }
+
+
+
 
 }
 

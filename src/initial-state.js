@@ -9,7 +9,7 @@ export default {
     isFacingLeft: true, //default is Right
 
     //Jumping
-    verticalBoost: 0,
+    verticalBoost: -3,
 
     //Keyboard
     isKeyboardLeftPressed: false,

@@ -19,6 +19,7 @@ const state = Data.getState();
 
 
 
+
 let assets = {
     mm: new Image()
 };
@@ -37,12 +38,13 @@ var step = function() {
 
 
     const state = Data.getState();
+    const prevState = Data.getPrevState();
 
     //Draw the scene
     draw(canvas, ctx, state, assets);
 
     //Run Steps
-    runSteps(state, frameCount, dt);
+    runSteps(state, prevState, frameCount, dt);
 
     //Track frame count for character animations
     frameCount += 1;
