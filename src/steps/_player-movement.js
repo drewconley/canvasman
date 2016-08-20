@@ -6,91 +6,103 @@ export function playerMovement(state, prevState, frameCount, dt) {
 
 
 
-    //Movement
-    if (state.isKeyboardLeftPressed) {
+    //Movement /////////////////////////////////////////////
+    let characterX = state.characterX;
+    let isFacingLeft = state.isFacingLeft;
 
-        const newX = Math.round( state.characterX - (110 * dt) );
-        mergeState({
-            characterX: newX > 0 ? newX : 0,
-            isFacingLeft: true,
-        })
+
+    if (state.isKeyboardLeftPressed) {
+        characterX = Math.round( characterX - (110 * dt) );
+        isFacingLeft = true;
     }
 
     if (state.isKeyboardRightPressed) {
-
-        const newX = Math.round( state.characterX + (110 * dt) );
-        mergeState({
-            characterX: newX < (400 - 32) ? newX : 400-32,
-            isFacingLeft: false
-        })
+        characterX = Math.round( characterX + (110 * dt) );
+        isFacingLeft = false;
     }
+    ///////////////////////////////////
 
 
-    //Update character pose
-    mergeState({
-        characterPose: getCharacterPose(state)
-    });
 
 
-    //Vertical Boosting
-    let characterY = state.characterY;
+
+    var characterY = state.characterY;
+
+    /* VERTICAL BOOST */
     if (state.verticalBoost < 0) {
         const unit = 8;
         characterY -= unit;
         mergeState({
-            verticalBoost: state.verticalBoost + unit,
-            characterY: characterY
+            verticalBoost: state.verticalBoost + unit
         })
     }
 
 
+
+
+
     const surface = getStandingSurface(state);
+    //console.log(state.characterY, prevState.characterY, surface)
 
-    //console.log(surface, getStandingSurface(prevState))
-
-
-    if (surface) {
-
+    if (state.characterY == prevState.characterY) {
+        //console.log('no update')
     } else {
-
-        //Fall
-        characterY += 4;
-        if (characterY > 300 + 50) {
-            characterY = -50
-        }
+        //console.log('success')
     }
+
+
 
     /* EVENT: LANDING */
     if (surface && !getStandingSurface(prevState)) {
         console.log('LANDING!');
-        console.log(surface.y)
-
+        window.landingSfx.play();
         characterY = surface.y - 32;
     }
 
-    mergeState({
-        characterY: characterY
-    });
+    if (!surface) {
+        //Fall
+
+        characterY += 4;
 
 
-
+        if (characterY > 300 + 50) {
+            console.log('warp to top')
+            characterY = -50
+        }
+    }
 
 
 
 
     //ANIMATION
     //Change active frame
+    let nextFrame = state.characterFrame;
     if (frameCount % 8 == 0) {
-        const nextFrame = (state.characterFrame <= 2) ? state.characterFrame + 1 : 0;
-        mergeState({
-            characterFrame: nextFrame
-        })
+        nextFrame = (nextFrame <= 2) ? nextFrame + 1 : 0;
     }
 
 
 
 
+
+
+    /* Merge all state changes */
+    mergeState({
+        characterFrame: nextFrame,
+        characterPose: getCharacterPose(state), //Sprite
+
+        characterX: characterX,
+        characterY: characterY,
+
+        isFacingLeft: isFacingLeft,
+        isAbleToJump: Boolean(surface)
+
+    });
+
+
 }
+
+////////////////////////////////////////////////////
 
 function getCharacterPose(state) {
     const isLeft = state.isFacingLeft;
@@ -110,7 +122,6 @@ function getCharacterPose(state) {
 }
 
 function getStandingSurface(state) {
-    //return state.characterY < 300-32; //Meh, this will check for floors?
 
     const characterModel = {
         x: state.characterX,
@@ -118,8 +129,5 @@ function getStandingSurface(state) {
         width: 32,
         height: 32
     };
-
-
     return getSolidSurface(characterModel, state.walls); //returns a model or `null`
-
 }

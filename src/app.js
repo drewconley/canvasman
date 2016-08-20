@@ -8,18 +8,12 @@ import runInits from './inits/inits'
 var canvas = document.getElementById("js-canvas");
 var ctx = canvas.getContext("2d");
 
-//Init the app. (Does the first draw)
+//Init the app
 Data.init(initialState, canvas, ctx);
 
-const state = Data.getState();
 
 
-
-
-
-
-
-
+//Set up assets
 let assets = {
     mm: new Image()
 };
@@ -40,11 +34,13 @@ var step = function() {
     const state = Data.getState();
     const prevState = Data.getPrevState();
 
+    //Run Steps
+    runSteps(state, prevState, frameCount, dt);
+
+
     //Draw the scene
     draw(canvas, ctx, state, assets);
 
-    //Run Steps
-    runSteps(state, prevState, frameCount, dt);
 
     //Track frame count for character animations
     frameCount += 1;
@@ -54,8 +50,26 @@ var step = function() {
     requestAnimationFrame(step)
 };
 
+
+/* SFX */
+window.landingSfx = new Howl({
+    src: ['https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/06_-_MegamanLand.wav'],
+    volume: 0.5
+});
+
+
+
+
+
+
+
+
+
 assets.mm.onload = function() {
+
+    const state = Data.getState();
+
     /* Inits */
     runInits(state);
     requestAnimationFrame(step);
-}
+};

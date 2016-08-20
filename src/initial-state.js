@@ -1,15 +1,19 @@
 export default {
+
+    counter: 0,
+
     canvasWidth: 400,
     canvasHeight: 300,
 
     characterX: 80,
-    characterY: 10,
+    characterY: 7,
     characterFrame: 0,
     characterPose: [ [0,0] ],
+    isAbleToJump: false,
     isFacingLeft: true, //default is Right
 
     //Jumping
-    verticalBoost: -3,
+    verticalBoost: 0,
 
     //Keyboard
     isKeyboardLeftPressed: false,

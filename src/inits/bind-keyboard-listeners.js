@@ -18,11 +18,14 @@ export function bindKeyboardListeners() {
 
         //Jump!
         if (e.which == 38) {
-            if (jumpSafe) {
-                jumpSafe = false;
-                mergeState({
-                    verticalBoost: -170
-                });
+
+            if ( Data.getState().isAbleToJump ) {
+                if (jumpSafe) {
+                    jumpSafe = false;
+                    mergeState({
+                        verticalBoost: -170
+                    });
+                }
             }
         }
 
