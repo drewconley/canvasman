@@ -28,13 +28,12 @@ export function playerMovement(state, prevState, frameCount, dt) {
 
     var characterY = state.characterY;
 
+    let verticalBoost = state.verticalBoost;
     /* VERTICAL BOOST */
     if (state.verticalBoost < 0) {
-        const unit = 8;
+        const unit = 9;
         characterY -= unit;
-        mergeState({
-            verticalBoost: state.verticalBoost + unit
-        })
+        verticalBoost = state.verticalBoost + unit;
     }
 
 
@@ -62,7 +61,7 @@ export function playerMovement(state, prevState, frameCount, dt) {
     if (!surface) {
         //Fall
 
-        characterY += 4;
+        characterY += 5;
 
 
         if (characterY > 300 + 50) {
@@ -94,6 +93,7 @@ export function playerMovement(state, prevState, frameCount, dt) {
         characterX: characterX,
         characterY: characterY,
 
+        verticalBoost: verticalBoost,
         isFacingLeft: isFacingLeft,
         isAbleToJump: Boolean(surface)
 
