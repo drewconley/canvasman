@@ -1,93 +1,135 @@
 import {mergeState} from '../action-creators'
 import MegaManPoses from '../sprite-measurements/megaman-measurement'
-import {getSolidSurface, getSolidSurfaceToRight, getSolidSurfaceToLeft} from '../helpers/collision-helpers'
+import {getSolidSurface, getSolidSurfaceDown} from '../helpers/collision-helpers'
 
 export function playerMovement(state, prevState, frameCount, dt) {
 
 
-
-    //Movement /////////////////////////////////////////////
-    let characterX = state.characterX;
     let isFacingLeft = state.isFacingLeft;
 
-    const leftWall = getLeftWall(state);
+    let nextCharacterX = state.characterX;
+    let nextCharacterY = state.characterY;
 
+    let inAir = state.inAir;
+    let isAbleToJump = state.isAbleToJump;
+
+    //Attempt to make adjustments
+
+    // Check the theoretical situation of new X or Y value
+    // If the new situation does NOT have any collision, the new value is okay.
+    // Otherwise, use the original value //Then we will talk about re-adjusting based on collis.
+
+    const downUnit = 5;  //should be something liek (10 * dt);
+
+    const nextDownFrame = {
+        x: nextCharacterX,
+        y: nextCharacterY + (downUnit),
+        width: state.characterWidth,
+        height: state.characterHeight
+    };
+    const surface = getSolidSurface(nextDownFrame, state.walls);
+
+        //Previous state, too!
+        const nextDownFramePREVIOUSLY = {
+            x: prevState.characterX,
+            y: prevState.characterY + (downUnit),
+            width: prevState.characterWidth,
+            height: prevState.characterHeight
+        };
+        const surfacePREVIOUSLY = getSolidSurface(nextDownFramePREVIOUSLY, state.walls);
+
+
+
+    if (!surface) {
+        inAir = true;
+        nextCharacterY += downUnit
+        isAbleToJump = false;
+    }
+
+    if (surface) {
+        isAbleToJump = true;
+    }
+
+    //if (surface && !surfacePREVIOUSLY) {
+    if (surface && inAir) {
+        //console.log('landing. correcting you');
+
+        window.landingSfx.play();
+
+        inAir = false;
+        isAbleToJump = true;
+        nextCharacterY = surface.y - state.characterHeight;
+    }
+
+
+
+    const xMovementUnit = Math.round(dt * 130);
 
 
     if (state.isKeyboardLeftPressed) {
-
-
-
-        if (!leftWall) {
-            characterX = Math.round(characterX - (110 * dt));
-        } else {
-            //characterX = leftWall.x + leftWall.width;
+        const leftUnit = xMovementUnit;
+        const nextLeftFrame = {
+            x: nextCharacterX - leftUnit,
+            y: nextCharacterY,
+            width: state.characterWidth,
+            height: state.characterHeight
+        };
+        const leftSurface = getSolidSurface(nextLeftFrame, state.walls);
+        if (!leftSurface) {
+            nextCharacterX -= leftUnit;
         }
+
         isFacingLeft = true;
+
     }
 
     if (state.isKeyboardRightPressed) {
-
-        if (!getRightWall(state)) {
-            characterX = Math.round(characterX + (110 * dt));
+        const rightUnit = xMovementUnit;
+        const nextRightFrame = {
+            x: nextCharacterX + rightUnit,
+            y: nextCharacterY,
+            width: state.characterWidth,
+            height: state.characterHeight
+        };
+        const rightSurface = getSolidSurface(nextRightFrame, state.walls);
+        if (!rightSurface) {
+            nextCharacterX += rightUnit;
         }
 
         isFacingLeft = false;
     }
     ///////////////////////////////////
 
-
-
-
-
-    var characterY = state.characterY;
-
     let verticalBoost = state.verticalBoost;
     /* VERTICAL BOOST */
-    if (state.verticalBoost < 0) {
+    if (verticalBoost < 0) {
         const unit = 9;
-        characterY -= unit;
-        verticalBoost = state.verticalBoost + unit;
-    }
+        const nextUpY = nextCharacterY -= unit;
 
+        //CHECK FOR CEILINGS
+        const nextUpFrame = {
+            x: nextCharacterX,
+            y: nextUpY,
+            width: state.characterWidth,
+            height: state.characterHeight
+        };
 
+        const surfaceUp = getSolidSurface(nextUpFrame, state.walls);
 
+        if (!surfaceUp) {
+            nextCharacterY = nextUpY;
 
+            //move boost back towards 0
+            verticalBoost = state.verticalBoost + unit;
 
-    const surface = getStandingSurface(state);
-    //console.log(state.characterY, prevState.characterY, surface)
-
-    if (state.characterY == prevState.characterY) {
-        //console.log('no update')
-    } else {
-        //console.log('success')
-    }
-
-
-
-    /* EVENT: LANDING */
-    if (surface && !getStandingSurface(prevState)) {
-        console.log('LANDING!');
-        window.landingSfx.play();
-        characterY = surface.y - 32;
-    }
-
-    if (!surface) {
-        //Fall
-
-        characterY += 5;
-
-
-        if (characterY > 300 + 50) {
-            console.log('warp to top')
-            characterY = -50
+        } else {
+            verticalBoost = 0; //Kill the boost. Hit your head
         }
+
+
     }
 
-
-
-
-    //ANIMATION
+    ////ANIMATION
     //Change active frame
     let nextFrame = state.characterFrame;
     if (frameCount % 8 == 0) {
@@ -96,22 +138,26 @@ export function playerMovement(state, prevState, frameCount, dt) {
 
 
 
-    //console.log( getRightWall(state) )
-
+    //Revive!
+    if (nextCharacterY > 300 + 50) {
+        nextCharacterY = -50
+    }
 
 
     /* Merge all state changes */
     mergeState({
         characterFrame: nextFrame,
-        characterPose: getCharacterPose(state), //Sprite
-
-        characterX: characterX,
-        characterY: characterY,
+        characterPose: getCharacterPose({ //Sprite
+            ...state,
+            inAir:inAir
+        }),
+        characterX: nextCharacterX,
+        characterY: nextCharacterY,
 
         verticalBoost: verticalBoost,
         isFacingLeft: isFacingLeft,
-        isAbleToJump: Boolean(surface)
-
+        isAbleToJump: isAbleToJump,
+        inAir: inAir
     });
 
 
@@ -122,10 +168,8 @@ export function playerMovement(state, prevState, frameCount, dt) {
 function getCharacterPose(state) {
     const isLeft = state.isFacingLeft;
 
-    const isStanding = Boolean( getStandingSurface(state) );
 
-
-    if (!isStanding) {
+    if (state.inAir) {
         return isLeft ? MegaManPoses.Left_Jump : MegaManPoses.Jump;
     }
 
@@ -136,34 +180,34 @@ function getCharacterPose(state) {
     return isLeft ? MegaManPoses.Left_Stand : MegaManPoses.Stand;
 }
 
-function getStandingSurface(state) {
+//function getStandingSurface(state) {
+//
+//    const characterModel = {
+//        x: state.characterX,
+//        y: state.characterY,
+//        width: 32,
+//        height: 32
+//    };
+//    return getSolidSurface(characterModel, state.walls); //returns a model or `null`
+//}
 
-    const characterModel = {
-        x: state.characterX,
-        y: state.characterY,
-        width: 32,
-        height: 32
-    };
-    return getSolidSurface(characterModel, state.walls); //returns a model or `null`
-}
-
-function getRightWall(state) {
-
-    const characterModel = {
-        x: state.characterX,
-        y: state.characterY,
-        width: 32,
-        height: 32
-    };
-    return getSolidSurfaceToRight(characterModel, state.walls); //returns a model or `null`
-}
-function getLeftWall(state) {
-
-    const characterModel = {
-        x: state.characterX,
-        y: state.characterY,
-        width: 32,
-        height: 32
-    };
-    return getSolidSurfaceToLeft(characterModel, state.walls); //returns a model or `null`
-}
+//function getRightWall(state) {
+//
+//    const characterModel = {
+//        x: state.characterX,
+//        y: state.characterY,
+//        width: 32,
+//        height: 32
+//    };
+//    return getSolidSurfaceToRight(characterModel, state.walls); //returns a model or `null`
+//}
+//function getLeftWall(state) {
+//
+//    const characterModel = {
+//        x: state.characterX,
+//        y: state.characterY,
+//        width: 32,
+//        height: 32
+//    };
+//    return getSolidSurfaceToLeft(characterModel, state.walls); //returns a model or `null`
+//}

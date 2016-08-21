@@ -23,6 +23,7 @@ export function bindKeyboardListeners() {
                 if (jumpSafe) {
                     jumpSafe = false;
                     mergeState({
+                        isAbleToJump: false,
                         verticalBoost: -170
                     });
                 }
