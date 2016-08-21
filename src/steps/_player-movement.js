@@ -27,18 +27,13 @@ export function playerMovement(state, prevState, frameCount, dt) {
         width: state.characterWidth,
         height: state.characterHeight
     };
-    const surface = getSolidSurface(nextDownFrame, state.walls);
+    let surface = getSolidSurface(nextDownFrame, state.walls);
 
-        //Previous state, too!
-        const nextDownFramePREVIOUSLY = {
-            x: prevState.characterX,
-            y: prevState.characterY + (downUnit),
-            width: prevState.characterWidth,
-            height: prevState.characterHeight
-        };
-        const surfacePREVIOUSLY = getSolidSurface(nextDownFramePREVIOUSLY, state.walls);
-
-
+    //BUG FIX: character would get corrected with hitting the bottom corner of a wall
+    if (surface && surface.y < nextCharacterY) {
+        console.log('compensate')
+        surface = null;
+    }
 
     if (!surface) {
         inAir = true;
@@ -58,7 +53,11 @@ export function playerMovement(state, prevState, frameCount, dt) {
 
         inAir = false;
         isAbleToJump = true;
+
+        //Correcting you
         nextCharacterY = surface.y - state.characterHeight;
+
+
     }
 
 

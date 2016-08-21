@@ -30,46 +30,32 @@ export default {
             "x": 0,
             "y": 0,
             "width": 16,
-            "height": 160
-        },
-        {
-            "_id": "placement_1471799475857",
-            "x": 16,
-            "y": 144,
-            "width": 144,
-            "height": 16
+            "height": 288
         },
         {
             "_id": "placement_1471799503050",
-            "x": 96,
-            "y": 80,
+            "x": 144,
+            "y": 176,
             "width": 32,
-            "height": 16
+            "height": 32
         },
         {
             "_id": "placement_1471799505017",
-            "x": 160,
-            "y": 112,
+            "x": 80,
+            "y": 144,
             "width": 32,
             "height": 16
         },
         {
             "_id": "placement_1471799507695",
-            "x": 48,
-            "y": 112,
+            "x": 16,
+            "y": 96,
             "width": 32,
             "height": 16
         },
         {
-            "_id": "placement_1471799515018",
-            "x": 208,
-            "y": 80,
-            "width": 16,
-            "height": 16
-        },
-        {
             "_id": "placement_1471799516043",
-            "x": 240,
+            "x": 208,
             "y": 96,
             "width": 16,
             "height": 16
@@ -85,7 +71,56 @@ export default {
             "_id": "placement_1471799518135",
             "x": 288,
             "y": 96,
+            "width": 64,
+            "height": 16
+        },
+        {
+            "_id": "placement_1471804629540",
+            "x": 16,
+            "y": 272,
+            "width": 224,
+            "height": 16
+        },
+        {
+            "_id": "placement_1471804635390",
+            "x": 384,
+            "y": 0,
             "width": 16,
+            "height": 288
+        },
+        {
+            "_id": "placement_1471804652648",
+            "x": 16,
+            "y": 208,
+            "width": 176,
+            "height": 16
+        },
+        {
+            "_id": "placement_1471804662424",
+            "x": 320,
+            "y": 112,
+            "width": 32,
+            "height": 128
+        },
+        {
+            "_id": "placement_1471804690729",
+            "x": 224,
+            "y": 160,
+            "width": 80,
+            "height": 16
+        },
+        {
+            "_id": "placement_1471804698268",
+            "x": 304,
+            "y": 272,
+            "width": 80,
+            "height": 16
+        },
+        {
+            "_id": "placement_1471804739758",
+            "x": 112,
+            "y": 48,
+            "width": 32,
             "height": 16
         }
         //{
