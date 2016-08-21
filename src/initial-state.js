@@ -6,7 +6,10 @@ export default {
     canvasHeight: 300,
 
     characterX: 80,
-    characterY: 7,
+    characterY: 0,
+    characterWidth: 32,
+    characterHeight: 32,
+
     characterFrame: 0,
     characterPose: [ [0,0] ],
     isAbleToJump: false,
@@ -23,34 +26,48 @@ export default {
     walls: [
         {
             _id: "wall1",
-            x: 5,
-            y: 260,
-            height: 32,
-            width: 330
+            x: 0,
+            y: 0,
+            height: 32 * 20,
+            width: 16
         },
 
         {
             _id: "wall2",
-            x: 280,
-            y: 215,
-            height: 40,
-            width: 150
+            x: 400-16,
+            y: 0,
+            height: 32 * 20,
+            width: 16
         },
 
         {
             _id: "wall3",
-            x: 170,
-            y: 200,
-            height: 50,
-            width: 32
+            x: 16,
+            y: 300-32,
+            height: 16,
+            width: 16 * 10
         },
 
         {
             _id: "wall4",
-            x: 0,
+            x: 16*10,
             y: 210,
-            height: 50,
-            width: 32
+            height: 32,
+            width: 32*2
+        },
+        {
+            _id: "wall5",
+            x: 16*14,
+            y: 210-32,
+            height: 32,
+            width: 32*2
+        },
+        {
+            _id: "wall5",
+            x: 16,
+            y: 300-(32*4),
+            height: 16,
+            width: 16 * 5
         }
     ],
 

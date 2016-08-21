@@ -19,14 +19,14 @@ export function bindKeyboardListeners() {
         //Jump!
         if (e.which == 38) {
 
-            if ( Data.getState().isAbleToJump ) {
+            //if ( Data.getState().isAbleToJump ) {
                 if (jumpSafe) {
                     jumpSafe = false;
                     mergeState({
                         verticalBoost: -170
                     });
                 }
-            }
+            //}
         }
 
     }, false);

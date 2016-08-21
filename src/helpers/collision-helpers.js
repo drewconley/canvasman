@@ -9,6 +9,32 @@ export function getSolidSurface(my, others=[]) {
 
     //Create 1 px sliver as my underline;
 
+    //const underlineModel = {
+    //    height:1,
+    //    width: my.width,
+    //    y: my.y + my.height,
+    //    x: my.x
+    //};
+
+    var touchingModel = null; //Assume False
+    others.forEach(otherModel => {
+
+        if (touchingModel) {
+            return; //Dont rerun if we already have a match
+        }
+
+        if (isTouching( my, otherModel)) {
+            touchingModel = {...otherModel};
+        }
+    });
+
+    return touchingModel;
+}
+
+export function getSolidSurfaceDown(my, others=[]) {
+
+    //Create 1 px sliver as my underline;
+
     const underlineModel = {
         height:1,
         width: my.width,
@@ -30,6 +56,9 @@ export function getSolidSurface(my, others=[]) {
 
     return touchingModel;
 }
+
+
+
 
 export function getSolidSurfaceToRight(my, others=[]) {
 

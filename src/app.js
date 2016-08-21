@@ -34,12 +34,17 @@ var step = function() {
     const state = Data.getState();
     const prevState = Data.getPrevState();
 
-    //Run Steps
+    //Draw the scene
+    draw(canvas, ctx, state, assets);
+
+
+
+
+    //Run Steps - adjust state for next pass
     runSteps(state, prevState, frameCount, dt);
 
 
-    //Draw the scene
-    draw(canvas, ctx, state, assets);
+
 
 
     //Track frame count for character animations
