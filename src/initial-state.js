@@ -9,6 +9,7 @@ export default {
     characterY: 0,
     characterWidth: 32,
     characterHeight: 32,
+    inAir: true,
 
     characterFrame: 0,
     characterPose: [ [0,0] ],

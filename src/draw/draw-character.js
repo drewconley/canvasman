@@ -4,8 +4,10 @@ export function drawCharacter(ctx, state, assets) {
     const characterHeight = 32;
 
     ctx.beginPath();
-     ctx.fillStyle = "#fff";
 
+
+        /* Debug Rectangle */
+     ctx.fillStyle = "#fff";
      ctx.fillRect(
          state.characterX, state.characterY,
          characterWidth, characterHeight
@@ -16,13 +18,13 @@ export function drawCharacter(ctx, state, assets) {
 
 
 
-    //ctx.drawImage(
-    //    assets.mm,
-    //    activeFrame[0], activeFrame[1], //Where in the spritesheet x/y
-    //    characterWidth,characterWidth,
-    //    state.characterX, state.characterY,
-    //    characterWidth,characterWidth
-    //);
+    ctx.drawImage(
+        assets.mm,
+        activeFrame[0], activeFrame[1], //Where in the spritesheet x/y
+        characterWidth,characterWidth,
+        state.characterX, state.characterY,
+        characterWidth,characterWidth
+    );
 
 
 

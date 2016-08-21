@@ -5,10 +5,13 @@ import {getSolidSurface, getSolidSurfaceDown} from '../helpers/collision-helpers
 export function playerMovement(state, prevState, frameCount, dt) {
 
 
+    let isFacingLeft = state.isFacingLeft;
 
     let nextCharacterX = state.characterX;
     let nextCharacterY = state.characterY;
 
+    let inAir = state.inAir;
+    let isAbleToJump = state.isAbleToJump;
 
     //Attempt to make adjustments
 
@@ -24,12 +27,40 @@ export function playerMovement(state, prevState, frameCount, dt) {
         width: state.characterWidth,
         height: state.characterHeight
     };
-
     const surface = getSolidSurface(nextDownFrame, state.walls);
 
+        //Previous state, too!
+        const nextDownFramePREVIOUSLY = {
+            x: prevState.characterX,
+            y: prevState.characterY + (downUnit),
+            width: prevState.characterWidth,
+            height: prevState.characterHeight
+        };
+        const surfacePREVIOUSLY = getSolidSurface(nextDownFramePREVIOUSLY, state.walls);
+
+
+
     if (!surface) {
+        inAir = true;
         nextCharacterY += downUnit
+        isAbleToJump = false;
     }
+
+    if (surface) {
+        isAbleToJump = true;
+    }
+
+    //if (surface && !surfacePREVIOUSLY) {
+    if (surface && inAir) {
+        //console.log('landing. correcting you');
+
+        window.landingSfx.play();
+
+        inAir = false;
+        isAbleToJump = true;
+        nextCharacterY = surface.y - state.characterHeight;
+    }
+
 
 
 
@@ -52,6 +83,8 @@ export function playerMovement(state, prevState, frameCount, dt) {
             nextCharacterX -= leftUnit;
         }
 
+        isFacingLeft = true;
+
     }
 
     if (state.isKeyboardRightPressed) {
@@ -66,6 +99,8 @@ export function playerMovement(state, prevState, frameCount, dt) {
         if (!rightSurface) {
             nextCharacterX += rightUnit;
         }
+
+        isFacingLeft = false;
     }
     ///////////////////////////////////
 
@@ -92,18 +127,18 @@ export function playerMovement(state, prevState, frameCount, dt) {
             verticalBoost = state.verticalBoost + unit;
 
         } else {
-            verticalBoost = 0; //Kill the boost. Hit your head 
+            verticalBoost = 0; //Kill the boost. Hit your head
         }
 
 
     }
 
     ////ANIMATION
-    ////Change active frame
-    //let nextFrame = state.characterFrame;
-    //if (frameCount % 8 == 0) {
-    //    nextFrame = (nextFrame <= 2) ? nextFrame + 1 : 0;
-    //}
+    //Change active frame
+    let nextFrame = state.characterFrame;
+    if (frameCount % 8 == 0) {
+        nextFrame = (nextFrame <= 2) ? nextFrame + 1 : 0;
+    }
 
 
 
@@ -115,15 +150,18 @@ export function playerMovement(state, prevState, frameCount, dt) {
 
     /* Merge all state changes */
     mergeState({
-        //characterFrame: nextFrame,
-        //characterPose: getCharacterPose(state), //Sprite
-
+        characterFrame: nextFrame,
+        characterPose: getCharacterPose({ //Sprite
+            ...state,
+            inAir:inAir
+        }),
         characterX: nextCharacterX,
         characterY: nextCharacterY,
 
         verticalBoost: verticalBoost,
-        //isFacingLeft: isFacingLeft,
-        //isAbleToJump: Boolean(surface)
+        isFacingLeft: isFacingLeft,
+        isAbleToJump: isAbleToJump,
+        inAir: inAir
     });
 
 
@@ -137,7 +175,7 @@ function getCharacterPose(state) {
     const isStanding = Boolean( getStandingSurface(state) );
 
 
-    if (!isStanding) {
+    if (state.inAir) {
         return isLeft ? MegaManPoses.Left_Jump : MegaManPoses.Jump;
     }
 
