@@ -38,11 +38,3 @@ function drawBullets(ctx, state) {
     }
 }
 
-/*
- ctx.drawImage(image,
- 10, 10,   // Start at 10 pixels from the left and the top of the image (crop),
- 80, 30,   // "Get" a `80 * 30` (w * h) area from the source image (crop),
- 0, 0,     // Place the result at 0, 0 in the canvas,
- 160, 60); // With as width / height: 160 * 60 (scale)
- //Thank you, person from Stack Overflow
- */

@@ -7,8 +7,8 @@ export default {
 
     characterX: 80,
     characterY: 0,
-    characterWidth: 32,
-    characterHeight: 32,
+    characterWidth: 20, //hitboxW
+    characterHeight: 24, //hitboxY
     inAir: true,
 
     characterFrame: 0,
@@ -26,50 +26,113 @@ export default {
 
     walls: [
         {
-            _id: "wall1",
-            x: 0,
-            y: 0,
-            height: 32 * 20,
-            width: 16
-        },
-
-        {
-            _id: "wall2",
-            x: 400-16,
-            y: 0,
-            height: 32 * 20,
-            width: 16
-        },
-
-        {
-            _id: "wall3",
-            x: 16,
-            y: 300-32,
-            height: 16,
-            width: 16 * 10
-        },
-
-        {
-            _id: "wall4",
-            x: 16*10,
-            y: 210,
-            height: 32,
-            width: 32*2
+            "_id": "placement_1471799473495",
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 160
         },
         {
-            _id: "wall5",
-            x: 16*14,
-            y: 210-32,
-            height: 32,
-            width: 32*2
+            "_id": "placement_1471799475857",
+            "x": 16,
+            "y": 144,
+            "width": 144,
+            "height": 16
         },
         {
-            _id: "wall5",
-            x: 16,
-            y: 300-(32*4),
-            height: 16,
-            width: 16 * 5
+            "_id": "placement_1471799503050",
+            "x": 96,
+            "y": 80,
+            "width": 32,
+            "height": 16
+        },
+        {
+            "_id": "placement_1471799505017",
+            "x": 160,
+            "y": 112,
+            "width": 32,
+            "height": 16
+        },
+        {
+            "_id": "placement_1471799507695",
+            "x": 48,
+            "y": 112,
+            "width": 32,
+            "height": 16
+        },
+        {
+            "_id": "placement_1471799515018",
+            "x": 208,
+            "y": 80,
+            "width": 16,
+            "height": 16
+        },
+        {
+            "_id": "placement_1471799516043",
+            "x": 240,
+            "y": 96,
+            "width": 16,
+            "height": 16
+        },
+        {
+            "_id": "placement_1471799517145",
+            "x": 256,
+            "y": 48,
+            "width": 16,
+            "height": 16
+        },
+        {
+            "_id": "placement_1471799518135",
+            "x": 288,
+            "y": 96,
+            "width": 16,
+            "height": 16
         }
+        //{
+        //    _id: "wall1",
+        //    x: 0,
+        //    y: 0,
+        //    height: 32 * 20,
+        //    width: 16
+        //},
+        //
+        //{
+        //    _id: "wall2",
+        //    x: 400-16,
+        //    y: 0,
+        //    height: 32 * 20,
+        //    width: 16
+        //},
+        //
+        //{
+        //    _id: "wall3",
+        //    x: 16,
+        //    y: 300-32,
+        //    height: 16,
+        //    width: 16 * 10
+        //},
+        //
+        //{
+        //    _id: "wall4",
+        //    x: 16*10,
+        //    y: 210,
+        //    height: 32,
+        //    width: 32*2
+        //},
+        //{
+        //    _id: "wall5",
+        //    x: 16*14,
+        //    y: 210-32,
+        //    height: 32,
+        //    width: 32*2
+        //},
+        //{
+        //    _id: "wall5",
+        //    x: 16,
+        //    y: 300-(32*4),
+        //    height: 16,
+        //    width: 16 * 5
+        //}
     ],
 
 

@@ -63,15 +63,11 @@ export function playerMovement(state, prevState, frameCount, dt) {
 
 
 
-
-
-
-
-
+    const xMovementUnit = Math.round(dt * 130);
 
 
     if (state.isKeyboardLeftPressed) {
-        const leftUnit = 3;
+        const leftUnit = xMovementUnit;
         const nextLeftFrame = {
             x: nextCharacterX - leftUnit,
             y: nextCharacterY,
@@ -88,7 +84,7 @@ export function playerMovement(state, prevState, frameCount, dt) {
     }
 
     if (state.isKeyboardRightPressed) {
-        const rightUnit = 3;
+        const rightUnit = xMovementUnit;
         const nextRightFrame = {
             x: nextCharacterX + rightUnit,
             y: nextCharacterY,
@@ -143,8 +139,8 @@ export function playerMovement(state, prevState, frameCount, dt) {
 
 
     //Revive!
-    if (nextCharacterY > 332) {
-        nextCharacterY = -32
+    if (nextCharacterY > 300 + 50) {
+        nextCharacterY = -50
     }
 
 
@@ -172,8 +168,6 @@ export function playerMovement(state, prevState, frameCount, dt) {
 function getCharacterPose(state) {
     const isLeft = state.isFacingLeft;
 
-    const isStanding = Boolean( getStandingSurface(state) );
-
 
     if (state.inAir) {
         return isLeft ? MegaManPoses.Left_Jump : MegaManPoses.Jump;
@@ -186,34 +180,34 @@ function getCharacterPose(state) {
     return isLeft ? MegaManPoses.Left_Stand : MegaManPoses.Stand;
 }
 
-function getStandingSurface(state) {
+//function getStandingSurface(state) {
+//
+//    const characterModel = {
+//        x: state.characterX,
+//        y: state.characterY,
+//        width: 32,
+//        height: 32
+//    };
+//    return getSolidSurface(characterModel, state.walls); //returns a model or `null`
+//}
 
-    const characterModel = {
-        x: state.characterX,
-        y: state.characterY,
-        width: 32,
-        height: 32
-    };
-    return getSolidSurface(characterModel, state.walls); //returns a model or `null`
-}
-
-function getRightWall(state) {
-
-    const characterModel = {
-        x: state.characterX,
-        y: state.characterY,
-        width: 32,
-        height: 32
-    };
-    return getSolidSurfaceToRight(characterModel, state.walls); //returns a model or `null`
-}
-function getLeftWall(state) {
-
-    const characterModel = {
-        x: state.characterX,
-        y: state.characterY,
-        width: 32,
-        height: 32
-    };
-    return getSolidSurfaceToLeft(characterModel, state.walls); //returns a model or `null`
-}
+//function getRightWall(state) {
+//
+//    const characterModel = {
+//        x: state.characterX,
+//        y: state.characterY,
+//        width: 32,
+//        height: 32
+//    };
+//    return getSolidSurfaceToRight(characterModel, state.walls); //returns a model or `null`
+//}
+//function getLeftWall(state) {
+//
+//    const characterModel = {
+//        x: state.characterX,
+//        y: state.characterY,
+//        width: 32,
+//        height: 32
+//    };
+//    return getSolidSurfaceToLeft(characterModel, state.walls); //returns a model or `null`
+//}
